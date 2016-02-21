@@ -444,51 +444,51 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
-			// Prepare this context for refreshing.
+			// 初始化前作一些准备操作，如记录启动时间，处理占位属性源，验证必要的上下文属性等
 			prepareRefresh();
 
-			// Tell the subclass to refresh the internal bean factory.
+			// 交由子类去初始化容器
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			// Prepare the bean factory for use in this context.
+			// 配置容器的标准上下文特性，如类加载器，回调，
 			prepareBeanFactory(beanFactory);
 
 			try {
-				// Allows post-processing of the bean factory in context subclasses.
+				// 允许子类对容器进行处理，此时BeanDefinition已经加载完毕，但没有Bean实例生成
 				postProcessBeanFactory(beanFactory);
 
-				// Invoke factory processors registered as beans in the context.
+				// 调用注册的BeanFactoryPostProcessor
 				invokeBeanFactoryPostProcessors(beanFactory);
 
-				// Register bean processors that intercept bean creation.
+				// 注册BeanPostProcessor，用于拦截Bean的实例化
 				registerBeanPostProcessors(beanFactory);
 
-				// Initialize message source for this context.
+				// 初始化信息源
 				initMessageSource();
 
-				// Initialize event multicaster for this context.
+				// 初始化应用事件广播器
 				initApplicationEventMulticaster();
 
-				// Initialize other special beans in specific context subclasses.
+				// 交由子类实例化一些特殊的Bean
 				onRefresh();
 
-				// Check for listener beans and register them.
+				// 注册应用监听器
 				registerListeners();
 
-				// Instantiate all remaining (non-lazy-init) singletons.
+				// 实例化所有非lazy-ini的单例Bean
 				finishBeanFactoryInitialization(beanFactory);
 
-				// Last step: publish corresponding event.
+				// 发布事件
 				finishRefresh();
 			}
 
 			catch (BeansException ex) {
 				logger.warn("Exception encountered during context initialization - cancelling refresh attempt", ex);
 
-				// Destroy already created singletons to avoid dangling resources.
+				// 销毁注册的单例bean
 				destroyBeans();
 
-				// Reset 'active' flag.
+				// 重置
 				cancelRefresh(ex);
 
 				// Propagate exception to caller.
