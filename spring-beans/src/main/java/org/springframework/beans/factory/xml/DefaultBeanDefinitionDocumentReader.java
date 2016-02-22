@@ -152,12 +152,8 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 
 	protected BeanDefinitionParserDelegate createDelegate(
 			XmlReaderContext readerContext, Element root, BeanDefinitionParserDelegate parentDelegate) {
-
-		BeanDefinitionParserDelegate delegate = createHelper(readerContext, root, parentDelegate);
-		if (delegate == null) {
-			delegate = new BeanDefinitionParserDelegate(readerContext, getEnvironment());
-			delegate.initDefaults(root, parentDelegate);
-		}
+		BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate(readerContext, getEnvironment());
+        delegate.initDefaults(root, parentDelegate);
 		return delegate;
 	}
 

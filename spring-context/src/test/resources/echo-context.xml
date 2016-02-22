@@ -6,14 +6,8 @@
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 
-    <bean id="demoService" class="service.DemoService" lazy-init="false">
-        <description>A demo service</description>
-        <meta key="xx" value="yy" />
-        <meta key="aa" value="bb" />
+    <bean id="echoService" class="service.EchoService" >
+        <description>An Echo Service</description>
     </bean>
-
-    <import resource="classpath:echo-context.xml" />
-
-    <alias name="demoService" alias="demoServer2" />
 
 </beans>

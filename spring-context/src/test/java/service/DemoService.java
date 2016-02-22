@@ -1,5 +1,7 @@
 package service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Author: haolin
  * Email: haolin.h0@gmail.com
@@ -7,7 +9,11 @@ package service;
  */
 public class DemoService {
 
+    @Autowired
+    private EchoService echoService;
+
     public String hello(String name){
+        echoService.echo(name);
         return "hello, " + name;
     }
 }
