@@ -2,7 +2,7 @@ package org.springframework.context;
 
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import service.DemoService;
+import service.HelloService;
 
 /**
  * Author: haolin
@@ -16,8 +16,8 @@ public class ClassPathXmlApplicationContextTests {
         System.setProperty("context.name", "demo");
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:${context.name}-context.xml");
         context.start();
-        DemoService demoService = context.getBean(DemoService.class);
-        System.out.println(demoService.hello("world"));
+        HelloService helloService = context.getBean(HelloService.class);
+        System.out.println(helloService.hello("world"));
     }
 
 }

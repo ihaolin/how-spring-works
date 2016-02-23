@@ -6,14 +6,15 @@
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 
-    <bean id="demoService" class="service.DemoService" lazy-init="false">
+    <bean id="helloService" class="service.HelloService" lazy-init="true" autowire="byType">
         <description>A demo service</description>
         <meta key="xx" value="yy" />
         <meta key="aa" value="bb" />
+        <!--<property name="echoService" ref="echoService" />-->
     </bean>
 
     <import resource="classpath:echo-context.xml" />
 
-    <alias name="demoService" alias="demoServer2" />
+    <alias name="helloService" alias="demoServer2" />
 
 </beans>

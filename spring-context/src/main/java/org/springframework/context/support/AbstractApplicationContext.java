@@ -460,7 +460,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// 调用注册的BeanFactoryPostProcessor
 				invokeBeanFactoryPostProcessors(beanFactory);
 
-				// 注册BeanPostProcessor，用于拦截Bean的实例化
+				// 实例化并调用BeanPostProcessor
 				registerBeanPostProcessors(beanFactory);
 
 				// 初始化信息源

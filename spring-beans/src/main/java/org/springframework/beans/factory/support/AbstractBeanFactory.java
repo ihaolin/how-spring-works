@@ -248,8 +248,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		}
 
 		else {
-			// 当前bean是prototype类型，尝试创建新的bean
-            // 通过ThreadLocal查询当前bean是否正在被创建
+			// 当前bean是prototype类型，且正在创建中
 			if (isPrototypeCurrentlyInCreation(beanName)) {
 				throw new BeanCurrentlyInCreationException(beanName);
 			}
