@@ -21,11 +21,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.HashSet;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StreamUtils;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -98,6 +100,17 @@ public class ResourceTests {
 	}
 
 	@Test
+	public void testClassPathResource2() throws IOException {
+		ClassPathResource resource = new ClassPathResource("org/springframework/core/io/Resource.class");
+		System.out.println("URL = " + resource.getURL().getPath());
+		System.out.println("URI = " + resource.getURI().getPath());
+		String byteCode  = StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
+		resource.getInputStream().close();
+		System.out.println(byteCode);
+		System.out.println("content lenght = " + resource.contentLength());
+	}
+
+	@Test
 	public void testClassPathResourceWithClassLoader() throws IOException {
 		Resource resource =
 				new ClassPathResource("org/springframework/core/io/Resource.class", getClass().getClassLoader());
@@ -128,7 +141,7 @@ public class ResourceTests {
 		Resource resource = new UrlResource(getClass().getResource("Resource.class"));
 		doTestResource(resource);
 		assertEquals(new UrlResource(getClass().getResource("Resource.class")), resource);
-		Resource resource2 = new UrlResource("file:core/io/Resource.class");
+		Resource resource2 = new UrlResource("zk:core/io/Resource.class");
 		assertEquals(resource2, new UrlResource("file:core/../core/io/./Resource.class"));
 	}
 
