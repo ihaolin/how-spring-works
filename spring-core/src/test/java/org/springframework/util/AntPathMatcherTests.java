@@ -110,6 +110,7 @@ public class AntPathMatcherTests {
 
 		assertFalse(pathMatcher.match("/????", "/bala/bla"));
 		assertFalse(pathMatcher.match("/**/*bla", "/bla/bla/bla/bbb"));
+		assertTrue(pathMatcher.match("/**/*bla", "/bla/bla/bla"));
 
 		assertTrue(pathMatcher.match("/*bla*/**/bla/**", "/XXXblaXXXX/testing/testing/bla/testing/testing/"));
 		assertTrue(pathMatcher.match("/*bla*/**/bla/*", "/XXXblaXXXX/testing/testing/bla/testing"));

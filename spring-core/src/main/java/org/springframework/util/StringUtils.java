@@ -390,6 +390,11 @@ public abstract class StringUtils {
 		if (!hasLength(inString) || !hasLength(oldPattern) || newPattern == null) {
 			return inString;
 		}
+
+		if (oldPattern.equals(newPattern)){
+			return inString;
+		}
+
 		StringBuilder sb = new StringBuilder();
 		int pos = 0; // our position in the old string
 		int index = inString.indexOf(oldPattern);
