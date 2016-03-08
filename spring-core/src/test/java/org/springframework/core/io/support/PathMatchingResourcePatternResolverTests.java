@@ -21,8 +21,10 @@ import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -59,15 +61,10 @@ public class PathMatchingResourcePatternResolverTests {
 	private PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
 
-	@Test
+	@Test(expected = FileNotFoundException.class)
 	public void testInvalidPrefixWithPatternElementInIt() throws IOException {
-		try {
-			resolver.getResources("xx**:**/*.xy");
-			fail("Should have thrown FileNotFoundException");
-		}
-		catch (FileNotFoundException ex) {
-			// expected
-		}
+		resolver.getResources("xx**:**/*.xy");
+		fail("Should have thrown FileNotFoundException");
 	}
 
 	@Test
@@ -108,9 +105,25 @@ public class PathMatchingResourcePatternResolverTests {
 	}
 
 	@Test
+	public void testClasspathWithPatternInJarLog() throws IOException {
+		Resource[] resources = resolver.getResources("classpath:org/apache/commons/logging/Log.class");
+		for (Resource resource : resources){
+			System.out.println(resource);
+		}
+	}
+
+	@Test
 	public void testClasspathStartWithPatternInJar() throws IOException {
 		Resource[] resources = resolver.getResources("classpath*:org/apache/commons/logging/*.class");
 		assertProtocolAndFilenames(resources, "jar", CLASSES_IN_COMMONSLOGGING);
+	}
+
+	@Test
+	public void testClasspathStartWithClassName() throws IOException {
+		Resource[] resources = resolver.getResources("classpath*:java/lang/String2.class");
+		for (Resource resource : resources){
+			System.out.println(resource);
+		}
 	}
 
 	private void assertProtocolAndFilename(Resource resource, String urlProtocol, String fileName) throws IOException {
@@ -162,4 +175,13 @@ public class PathMatchingResourcePatternResolverTests {
 		fail("resource [" + resource + "] does not have a filename that matches and of the names in 'fileNames'");
 	}
 
+	@Test
+	public void testClassLoaderGetResources() throws IOException {
+		Enumeration<URL> urlResources =  getClass().getClassLoader().getResources("aj/org/objectweb/asm/");
+		URL urlResource;
+		while (urlResources.hasMoreElements()){
+			urlResource = urlResources.nextElement();
+			System.out.println(urlResource);
+		}
+	}
 }

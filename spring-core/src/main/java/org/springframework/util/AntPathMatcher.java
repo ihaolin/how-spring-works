@@ -106,7 +106,7 @@ public class AntPathMatcher implements PathMatcher {
 		if (path.startsWith(this.pathSeparator) != pattern.startsWith(this.pathSeparator)) {
 			return false;
 		}
-
+		// 分割为数组, 以 /
 		String[] pattDirs = tokenizePath(pattern);
 		String[] pathDirs = tokenizePath(path);
 
@@ -118,6 +118,7 @@ public class AntPathMatcher implements PathMatcher {
 		// Match all elements up to the first **
 		while (pattIdxStart <= pattIdxEnd && pathIdxStart <= pathIdxEnd) {
 			String pattDir = pattDirs[pattIdxStart];
+			// ** 代表0个或多个目录
 			if ("**".equals(pattDir)) {
 				break;
 			}
