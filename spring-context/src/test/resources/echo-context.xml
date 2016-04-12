@@ -5,9 +5,16 @@
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
+    <beans profile="dev">
+        <bean class="service.EchoService" >
+            <description>An Echo Service</description>
+        </bean>
+    </beans>
 
-    <bean id="echoService" class="service.EchoService" >
-        <description>An Echo Service</description>
-    </bean>
+    <beans profile="prod">
+        <bean class="service.EchoService" >
+            <description>An Echo Service</description>
+        </bean>
+    </beans>
 
 </beans>

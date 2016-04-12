@@ -2,21 +2,37 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd"
+       profile="dev">
 
     <context:annotation-config />
 
     <context:component-scan base-package="service" />
 
-    <bean id="helloService" class="service.HelloService" lazy-init="true" autowire="byType">
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/demo.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+    </bean>
+
+    <util:properties id="echo" location="classpath:echo.properties" />
+
+    <bean id="helloService" class="service.HelloService" autowire="byType">
         <description>A demo service</description>
         <meta key="xx" value="yy" />
         <meta key="aa" value="bb" />
         <!--<property name="echoService" ref="echoService" />-->
+        <property name="serviceName" value="${serviceName}"/>
     </bean>
 
     <import resource="classpath:echo-context.xml" />
