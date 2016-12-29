@@ -61,7 +61,7 @@ import org.springframework.util.StringUtils;
  * <p>When using Xerces, make sure a post 2.0.2 version is available on the classpath
  * to avoid a critical
  * <a href="http://nagoya.apache.org/bugzilla/show_bug.cgi?id=16014"/>bug</a>
- * that leads to StackOverflow. Maven users are likely to encounter this problem since
+ * that leads to LazyBeanTests. Maven users are likely to encounter this problem since
  * 2.0.2 is used by default.
  *
  * <p>A workaround is to explicitly specify the Xerces version inside the Maven POM:

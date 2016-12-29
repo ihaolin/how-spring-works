@@ -14,6 +14,10 @@ public class EchoService implements EnvironmentAware {
     @Value(value = "#{echo.echoHeader}")
     private String echoHeader;
 
+    public EchoService(){
+        System.out.println("I will be init.");
+    }
+
     public void echo(String msg){
         System.out.println(echoHeader + ": " + msg);
     }
